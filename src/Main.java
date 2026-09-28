@@ -1,12 +1,15 @@
+import agregación.Department;
+import agregación.Institute;
+import agregación.Student;
 import asociación.Bank;
 import asociación.Employee;
+import composición.House;
+import composición.Room;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
-public class Main{
-    public static void main(String[] args){
+public class Main {
+    public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
         System.out.println("=====Relaciones POO=====");
@@ -16,7 +19,7 @@ public class Main{
         System.out.println("Opcion: ");
         int opcion = in.nextInt();
 
-        switch (opcion){
+        switch (opcion) {
             case 1:
                 // Creating Employee objects
                 Employee emp1 = new Employee("Ridhi");
@@ -39,12 +42,65 @@ public class Main{
                             + " belongs to bank "
                             + bank.getBankName());
                 }
-        }
+
                 break;
             case 2:
+                // Creating independent Student objects
+                Student s1 = new Student("Parul", 1);
+                Student s2 = new Student("Sachin", 2);
+                Student s3 = new Student("Priya", 1);
+                Student s4 = new Student("Rahul", 2);
+
+                // Creating an list of CSE Students
+                List<Student> cse_students = new ArrayList<Student>();
+                cse_students.add(s1);
+                cse_students.add(s2);
+
+                // Creating an initial list of EE Students
+                List<Student> ee_students = new ArrayList<Student>();
+                ee_students.add(s3);
+                ee_students.add(s4);
+
+                // Creating Department object with a Students list
+                // using Aggregation (Department "has" students)
+                Department CSE = new Department("CSE", cse_students);
+                Department EE = new Department("EE", ee_students);
+
+                // Creating an initial list of Departments
+                List<Department> departments = new ArrayList<Department>();
+                departments.add(CSE);
+                departments.add(EE);
+
+                // Creating an Institute object with Departments list
+                // using Aggregation (Institute "has" Departments)
+                Institute institute = new Institute("BITS", departments);
+
+                // Display message for better readability
+                System.out.print("Total students in institute: ");
+
+                // Calling method to get total number of students
+                // in the institute and printing on console
+                System.out.print(
+                        institute.getTotalStudentsInInstitute());
+        
 
                 break;
             case 3:
+                House house = new House("Dream House");
+
+                house.addRoom(new Room("Living Room"));
+                house.addRoom(new Room("Bedroom"));
+                house.addRoom(new Room("Kitchen"));
+                house.addRoom(new Room("Bathroom"));
+
+                int r = house.getTotalRooms();
+                System.out.println("Total Rooms: " + r);
+
+                System.out.println("Room names: ");
+                for (Room room : house.getRooms()) {
+                    System.out.println("- " + room.getRoomName());
+                }
+
                 break;
         }
     }
